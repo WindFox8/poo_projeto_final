@@ -1,5 +1,7 @@
 # poo_projeto_final
 
+Descrições Trabalho: [Trabalho - Disciplina - 2024SEM2.pdf](https://github.com/user-attachments/files/17792600/Trabalho.-.Disciplina.-.2024SEM2.pdf)
+
 Diagrama(Aperfeiçoar): https://ufprbr0-my.sharepoint.com/:x:/g/personal/rafael_correr_ufpr_br/EcqSq5oX6ghBhgGzCjhVEEsB28Y_EgSz1VRASS0PKzu9PQ?e=ASbom7
 
 Trello: https://trello.com/invite/b/6732237ce4b6a9f73d200bb1/ATTI3abab36d78289d20351fc27b626e2ac6835A61D8/projeto-java
