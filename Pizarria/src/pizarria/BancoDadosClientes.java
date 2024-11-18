@@ -21,10 +21,13 @@ public class BancoDadosClientes {
     public static HashMap<String,Cliente> listaClientes = new HashMap<>();
 
     //variável para identificar os clientes dentro do hasmap
-    static int cont;
-    public static void incrementaCont (){
-        cont++;
+    static int cont = 0;
+    
+    public static int incrementaCont (){
+        cont++; 
+        return cont; 
     }
     
+  
     
 }
