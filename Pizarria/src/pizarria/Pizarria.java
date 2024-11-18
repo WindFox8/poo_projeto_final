@@ -14,7 +14,7 @@ public class Pizarria {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Cliente cliente = new Cliente("João", "Walter", "XXXX-XXXX");
+        Cliente cliente = new Cliente("João", "Walter", "XXXX-XXXX",54);
 
         Pedido pedido = new Pedido(1);
 
@@ -25,6 +25,7 @@ public class Pizarria {
         System.out.println(cliente.getSobreNome());
         System.out.println(cliente.getTelefone());
         System.out.println(cliente.listaPedidos);
+        System.out.println(cliente.getId());
     }
     
 }
