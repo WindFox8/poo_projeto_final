@@ -18,13 +18,12 @@ public class Pizarria {
 
         Pedido pedido = new Pedido(1);
 
-        cliente.addPedido(pedido);
 
         System.out.println();
         System.out.println(cliente.getNome());
         System.out.println(cliente.getSobreNome());
         System.out.println(cliente.getTelefone());
-        System.out.println(cliente.listaPedidos);
+       // System.out.println(cliente.listaPedidos);
         System.out.println(cliente.getId());
     }
     

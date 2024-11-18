@@ -17,7 +17,7 @@ public class Cliente {
     private String nome;
     private String sobreNome;
     private String telefone;
-    public List<Pedido> listaPedidos = new ArrayList<>();
+    public Pedido Pedido = new Pedido();
 
     public Cliente(String nome, String sobreNome, String telefone,int id) {
         this.nome = nome;
@@ -50,17 +50,20 @@ public class Cliente {
         this.telefone = telefone;
     }
    
-    public void addPedido(Pedido pedido) {
-        listaPedidos.add(pedido);
-    }
+ 
 
     public int getId() {
         return id;
     }
-    
-    public void removerPedido(Pedido pedido) {
-        if (pedido != null && listaPedidos.contains(pedido)) {
-            listaPedidos.remove(pedido);
-        }
+
+    public void setPedido(Pedido Pedido) {
+        this.Pedido = Pedido;
+    }
+
+    public Pedido getPedido() {
+        return Pedido;
     }
 }
+    
+    
+
