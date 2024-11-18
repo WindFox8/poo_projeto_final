@@ -28,6 +28,12 @@ public class BancoDadosClientes {
         return cont; 
     }
     
+    static int idPedido = 1;
+    
+    public static int incrementaIdPedido() {
+        idPedido++;
+        return idPedido;
+    }
   
     
 }
