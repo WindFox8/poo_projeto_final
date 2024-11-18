@@ -23,6 +23,7 @@ public class Cliente {
         this.nome = nome;
         this.sobreNome = sobreNome;
         this.telefone = telefone;
+        this.id = id;
     }
 
     public String getNome() {
