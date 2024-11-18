@@ -242,9 +242,9 @@ public class telaCadastraCliente extends javax.swing.JFrame {
                 
                 
                 //desabilitado para testes mais faceis
-                txtNome.setText("");
-                txtSobreNome.setText("");
-                txtTel.setText("");
+                // txtNome.setText("");
+                // txtSobreNome.setText("");
+                // txtTel.setText("");
 
 
             } else {

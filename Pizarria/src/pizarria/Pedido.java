@@ -28,6 +28,9 @@ public class Pedido {
         this.estado = Estado.ABERTO;    
         count++; 
     }
+    
+    public Pedido (){
+    }
 
     public int getId() {
         return id;
