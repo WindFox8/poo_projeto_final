@@ -13,12 +13,13 @@ import java.util.List;
  */
 public class Cliente {
     
+    private int id;
     private String nome;
     private String sobreNome;
     private String telefone;
     public List<Pedido> listaPedidos = new ArrayList<>();
 
-    public Cliente(String nome, String sobreNome, String telefone) {
+    public Cliente(String nome, String sobreNome, String telefone,int id) {
         this.nome = nome;
         this.sobreNome = sobreNome;
         this.telefone = telefone;
@@ -47,11 +48,15 @@ public class Cliente {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
-
+   
     public void addPedido(Pedido pedido) {
         listaPedidos.add(pedido);
     }
 
+    public int getId() {
+        return id;
+    }
+    
     public void removerPedido(Pedido pedido) {
         if (pedido != null && listaPedidos.contains(pedido)) {
             listaPedidos.remove(pedido);
