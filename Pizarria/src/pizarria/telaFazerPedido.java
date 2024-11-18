@@ -47,6 +47,8 @@ public class telaFazerPedido extends javax.swing.JFrame {
         labelCliente = new javax.swing.JLabel();
         boxTipos1 = new javax.swing.JComboBox<>();
         boxTipos2 = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        boxStatus = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -114,6 +116,10 @@ public class telaFazerPedido extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("STATUS:");
+
+        boxStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -139,15 +145,12 @@ public class telaFazerPedido extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnSair)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnSalvar))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(labelId)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(labelCliente))
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnSair)
                                     .addComponent(boxForma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnDimensao)
                                     .addComponent(jLabel2)
@@ -162,7 +165,14 @@ public class telaFazerPedido extends javax.swing.JFrame {
                                             .addGroup(layout.createSequentialGroup()
                                                 .addGap(121, 121, 121)
                                                 .addComponent(btnCalcular)))))
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnSalvar)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(boxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel1))
+                                        .addGap(12, 12, 12)))))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -173,9 +183,13 @@ public class telaFazerPedido extends javax.swing.JFrame {
                     .addComponent(labelId)
                     .addComponent(labelCliente))
                 .addGap(20, 20, 20)
-                .addComponent(jLabel2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(boxForma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(boxForma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(boxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addGap(1, 1, 1)
@@ -219,7 +233,7 @@ public class telaFazerPedido extends javax.swing.JFrame {
        //popular combo boxes e inicializar id do pedido
        String[] formas = {"Quadrada","Circular","Triangular"};
        String[] tiposPizzas = {"Simples","Especial","Premium"};
-       
+       String[] status = {"Aberto","À Caminho","Entregue"};
        Cliente c = clienteEscolhido;
        
        for (String tipos : formas)
@@ -228,6 +242,10 @@ public class telaFazerPedido extends javax.swing.JFrame {
        for (String pizzas : tiposPizzas){
          boxTipos1.addItem(pizzas);
          boxTipos2.addItem(pizzas);
+       }
+       
+       for (String estado : status){
+           boxStatus.addItem(estado);
        }
        
        labelId.setText("ID do Pedido: " + BancoDadosClientes.idPedido);
@@ -263,7 +281,7 @@ public class telaFazerPedido extends javax.swing.JFrame {
 
     private void boxTipos2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxTipos2ActionPerformed
         // Mudar sabores de acordo com o filtro selecioando
-         Object itemSelecionado = boxTipos2.getSelectedItem();
+        Object itemSelecionado = boxTipos2.getSelectedItem();
         String texto = itemSelecionado + "";
         
         switch (texto){
@@ -320,6 +338,7 @@ public class telaFazerPedido extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> boxForma;
     private javax.swing.JComboBox<String> boxSabor1;
     private javax.swing.JComboBox<String> boxSabor2;
+    private javax.swing.JComboBox<String> boxStatus;
     private javax.swing.JComboBox<String> boxTipos1;
     private javax.swing.JComboBox<String> boxTipos2;
     private javax.swing.JRadioButton btnArea;
@@ -328,6 +347,7 @@ public class telaFazerPedido extends javax.swing.JFrame {
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
     private javax.swing.ButtonGroup grupoBotao;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
