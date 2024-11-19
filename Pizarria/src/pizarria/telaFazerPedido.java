@@ -4,7 +4,9 @@
  */
 package pizarria;
 
+import java.util.HashSet;
 import javax.swing.JOptionPane;
+import static pizarria.BancoDadosSabores.*;
 
 /**
  *
@@ -90,7 +92,7 @@ public class telaFazerPedido extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        boxSabor1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        boxSabor1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {}));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("SABOR 1");
@@ -98,7 +100,7 @@ public class telaFazerPedido extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setText("SABOR 2");
 
-        boxSabor2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        boxSabor2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  }));
 
         btnCalcular.setText("CALCULAR");
         btnCalcular.addActionListener(new java.awt.event.ActionListener() {
@@ -307,12 +309,24 @@ public class telaFazerPedido extends javax.swing.JFrame {
         switch (texto){
             case "Simples":
                 //fazer mostrar lista so de simples
+                boxSabor1.removeAllItems();
+                for (SaborSimples sabor : saboresSimples){
+                    boxSabor1.addItem(sabor.getSabor());
+                }
                 break;
             case "Especial":
+                boxSabor1.removeAllItems();
+                 for (Sabor sabor : saboresEspecial){
+                    boxSabor1.addItem(sabor.getSabor());
+                }
                 //mostar lista de especial
                 break;
             case "Premium":
                 //mostra lista preimum
+                boxSabor1.removeAllItems();
+                 for (Sabor sabor : saboresPremium){
+                    boxSabor1.addItem(sabor.getSabor());
+                }
                 break;
             }
     }//GEN-LAST:event_boxTipos1ActionPerformed
@@ -325,12 +339,27 @@ public class telaFazerPedido extends javax.swing.JFrame {
         switch (texto){
             case "Simples":
                 //fazer mostrar lista so de simples
+                 boxSabor2.removeAllItems();
+                for (SaborSimples sabor : saboresSimples){
+                    boxSabor2.addItem(sabor.getSabor());
+                }
                 break;
             case "Especial":
                 //mostar lista de especial
+                 boxSabor2.removeAllItems();
+                 for (Sabor sabor : saboresEspecial){
+                    boxSabor2.addItem(sabor.getSabor());
+                }
                 break;
             case "Premium":
                 //mostra lista preimum
+                boxSabor2.removeAllItems();
+                 for (Sabor sabor : saboresPremium){
+                    boxSabor2.addItem(sabor.getSabor());
+                }
+                break;
+            case "Nenhum":
+                boxSabor2.removeAllItems();
                 break;
             default:
                 //não mostrar nada
@@ -345,16 +374,25 @@ public class telaFazerPedido extends javax.swing.JFrame {
         // TODO add your handling code here:
         // Fazer o calculo do valor da pizza
         //pegar todos os valores que pizza precisa
+        
+        //ESSE CODIGO E PARA ADICIONAR UMA PIZZA NO PEDIDO E NO 
         String tipo1 = boxTipos1.getSelectedItem() + "";
         String tipo2 = boxTipos2.getSelectedItem() + "";
         String forma = boxForma.getSelectedItem() + "";
-        String Sabor1 = boxSabor1.getSelectedItem() + "";
-        String Sabor2 = boxSabor2.getSelectedItem() + "";
         String sValor = txtAreaDimensao.getText();
-         
-         boolean temSabor2 = "Nenhum".equals(Sabor2);
-         double valor = 0;
+        
+        String Sabor2 = boxSabor2.getSelectedItem() + ""; // apenas para validação se tem dois sabores ou nao
 
+        
+         boolean nTemSabor2;
+         String saber2sabor = boxSabor2.getSelectedItem() + "";
+         if (boxSabor2.getSelectedItem() == null){
+             nTemSabor2 = true;
+         } else {
+             nTemSabor2 = false;
+         }
+         
+         double valor = 0;
         try {
             valor = Double.parseDouble(sValor);
         } catch (java.lang.NumberFormatException e) {
@@ -367,14 +405,24 @@ public class telaFazerPedido extends javax.swing.JFrame {
                 if (btnArea.isSelected()){
                     //calcula com base na área
                     //EM CONSTRUÇÃO
-                    /*
-                        if (temSabor2){
-                            PizzaQuadrada pizza = new PizzaQuadrada(valor, Sabor1, true);
-                        } else {
-                            PizzaQuadrada pizza = new PizzaQuadrada(valor, Sabor1, Sabor1, true);
-                        }
-                    */
+                        //nao tiver 2 sabores
+                        if (nTemSabor2){
+                            //cria um sabor temporario para poder colocar dentro da pizza (Sabor sabor1)
+                            Sabor sabor1 = new Sabor(boxSabor1.getSelectedItem() + "");
+                            PizzaQuadrada pizza = new PizzaQuadrada(valor, sabor1, true);    
+                            // pegando o cliente para adicionar a pizza no pedido dele
+                            Cliente c = this.clienteEscolhido;
+                            c.Pedido.addPizza(pizza);      
                             
+                            //PAREI AQUI
+                            
+                        } else {
+                            //tem 2 sabores
+                            Sabor sabor1 = new Sabor(boxSabor1.getSelectedItem() + "");
+                            Sabor sabor2 = new Sabor(boxSabor2.getSelectedItem() + "");
+
+                            PizzaQuadrada pizza = new PizzaQuadrada(valor, sabor1, sabor2, true);
+                        }               
                 } if (btnDimensao.isSelected()){
                     //calcula com base na dimensão
                 } else {
@@ -399,7 +447,7 @@ public class telaFazerPedido extends javax.swing.JFrame {
                     System.out.println("DEU ERRO");
                 }
                 break;
-            default : System.out.println("ERRO EM ALGO");;
+            default : System.out.println("SELECIONE UM FORMATO");;
         }
     }//GEN-LAST:event_btnCalcularActionPerformed
 

@@ -39,6 +39,17 @@ public class BancoDadosSabores {
     public static void removerSaborPremium(Sabor sabor) {
         saboresPremium.remove(sabor);
     }
+    public static Sabor getSaborSimples(int i){
+        return saboresSimples.get(i);
+    }
+    
+    public static Sabor getSaborEspeciais(int i){
+        return saboresEspecial.get(i);
+    }
+    
+    public static Sabor getSaborPremium(int i){
+        return saboresPremium.get(i);
+    }
     
     
     public static String imprimeSabores(){

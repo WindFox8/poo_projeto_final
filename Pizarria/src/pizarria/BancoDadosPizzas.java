@@ -12,6 +12,6 @@ import java.util.HashMap;
  */
 public class BancoDadosPizzas {
     
-        public static HashMap<String,Cliente> listaPizzas = new HashMap<>();
-
+        public static HashMap<String,Pizza> listaPizzas = new HashMap<>();
+        
 }
