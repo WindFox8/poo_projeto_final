@@ -15,12 +15,12 @@ public class SaborSimples extends Sabor{
       super(sabor);
     }
 
-    @Override
-    public double getValor() {
+  
+    public static double getValorSimples() {
       return valor;
     }
 
-    public void setValor(double valor) {
-        this.valor = valor;
+    public static void setValorSimples(double valorR) {
+        valor = valorR;
     }
 }

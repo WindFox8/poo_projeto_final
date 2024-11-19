@@ -14,13 +14,12 @@ public class SaborPremium extends Sabor{
     public SaborPremium(String sabor){
         super(sabor);
     }
-
-    @Override
-    public double getValor() {
+    
+    public static double getValorPremium() {
         return valor;
     }
 
-    public void setValor(double valor) {
-        this.valor = valor;
+    public static void setValorPremium(double valorR) {
+        valor = valorR;
     }
 }

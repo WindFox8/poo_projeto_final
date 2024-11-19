@@ -4,6 +4,14 @@
  */
 package pizarria;
 
+import java.awt.Button;
+import javax.swing.JOptionPane;
+import static pizarria.BancoDadosClientes.incrementaCont;
+import static pizarria.BancoDadosSabores.*;
+import static pizarria.SaborEspecial.setValorEspecial;
+import static pizarria.SaborPremium.setValorPremium;
+import static pizarria.SaborSimples.setValorSimples;
+
 /**
  *
  * @author joaow
@@ -16,6 +24,8 @@ public class telaMenuInicial extends javax.swing.JFrame {
     public telaMenuInicial() {
         initComponents();
     }
+    //inicializar banco de dados de sabores
+    BancoDadosSabores BancoSabores = new BancoDadosSabores();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,6 +42,7 @@ public class telaMenuInicial extends javax.swing.JFrame {
         btnVerPedidos = new javax.swing.JButton();
         btnAlterarPizzas = new javax.swing.JButton();
         btnCadastrarValores = new javax.swing.JButton();
+        btnPopular = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,8 +66,25 @@ public class telaMenuInicial extends javax.swing.JFrame {
         btnVerPedidos.setText("Ver Pedidos");
 
         btnAlterarPizzas.setText("Alterar Pizzas");
+        btnAlterarPizzas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarPizzasActionPerformed(evt);
+            }
+        });
 
         btnCadastrarValores.setText("Cadastrar Sabores");
+        btnCadastrarValores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadastrarValoresActionPerformed(evt);
+            }
+        });
+
+        btnPopular.setText("Popular");
+        btnPopular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPopularActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -65,15 +93,21 @@ public class telaMenuInicial extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAlterarPizzas)
-                    .addComponent(btnCadastrarValores)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(139, 139, 139)
-                        .addComponent(jLabel1))
-                    .addComponent(btnCadastrarClientes)
-                    .addComponent(btnRealizarPedidos)
-                    .addComponent(btnVerPedidos))
-                .addContainerGap(144, Short.MAX_VALUE))
+                        .addComponent(btnCadastrarValores)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnPopular))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAlterarPizzas)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(139, 139, 139)
+                                .addComponent(jLabel1))
+                            .addComponent(btnCadastrarClientes)
+                            .addComponent(btnRealizarPedidos)
+                            .addComponent(btnVerPedidos))
+                        .addGap(0, 138, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,7 +123,9 @@ public class telaMenuInicial extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnVerPedidos)
                 .addGap(18, 18, 18)
-                .addComponent(btnCadastrarValores)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCadastrarValores)
+                    .addComponent(btnPopular))
                 .addGap(36, 36, 36))
         );
 
@@ -109,6 +145,89 @@ public class telaMenuInicial extends javax.swing.JFrame {
         new telaCadastraCliente().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarClientesActionPerformed
+
+    private void btnCadastrarValoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarValoresActionPerformed
+        // ir para tela de casdastrar asbores
+        
+        new telaCadastrarSabores().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCadastrarValoresActionPerformed
+
+    private void btnAlterarPizzasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarPizzasActionPerformed
+        //ir para alterar preco dos tipos
+        
+        new telaAlterarPizzas().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnAlterarPizzasActionPerformed
+
+    private void btnPopularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPopularActionPerformed
+        //popular banco de dados
+        
+        //populando banco de Clientes
+        int id = incrementaCont();
+        String sId = Integer.toString(id);
+        Cliente c1 = new Cliente("Teste 1", "Sobrenome 1", "42999788478", id);
+        BancoDadosClientes.listaClientes.put(sId, c1);
+
+        id = incrementaCont();
+        sId = Integer.toString(id);
+        Cliente c2 = new Cliente("Teste 2", "Sobrenome 2", "42999788479", id);
+        BancoDadosClientes.listaClientes.put(sId, c2);
+
+        id = incrementaCont();
+        sId = Integer.toString(id);
+        Cliente c3 = new Cliente("Teste 3", "Sobrenome 3", "42999788480", id);
+        BancoDadosClientes.listaClientes.put(sId, c3);
+
+        id = incrementaCont();
+        sId = Integer.toString(id);
+        Cliente c4 = new Cliente("Teste 4", "Sobrenome 4", "42999788481", id);
+        BancoDadosClientes.listaClientes.put(sId, c4);
+
+        id = incrementaCont();
+        sId = Integer.toString(id);
+        Cliente c5 = new Cliente("Teste 5", "Sobrenome 5", "42999788482", id);
+        BancoDadosClientes.listaClientes.put(sId, c5);
+        
+        //popular banco de sabores
+          
+        SaborPremium saborPremium1 = new SaborPremium("Toscana");
+        adicionarSaborPremium(saborPremium1);
+
+        SaborPremium saborPremium2 = new SaborPremium("Frango com Catupiry");
+        adicionarSaborPremium(saborPremium2);
+
+        SaborPremium saborPremium3 = new SaborPremium("Carne Seca com Abóbora");
+        adicionarSaborPremium(saborPremium3);
+        
+        SaborSimples saborSimples1 = new SaborSimples("Margarita");
+        adicionarSaborSimples(saborSimples1);
+
+        SaborSimples saborSimples2 = new SaborSimples("Calabresa");
+        adicionarSaborSimples(saborSimples2);
+
+        SaborSimples saborSimples3 = new SaborSimples("Margherita");
+        adicionarSaborSimples(saborSimples3);
+       
+        Sabor saborEspecial1 = new Sabor("Frango com Catupiry");
+        adicionarSaborEspecial(saborEspecial1);
+
+        Sabor saborEspecial2 = new Sabor("Portuguesa");
+        adicionarSaborEspecial(saborEspecial2);
+
+        Sabor saborEspecial3 = new Sabor("4 Queijos");
+        adicionarSaborEspecial(saborEspecial3);
+        
+        //popula valores dos tipos de pizza
+        setValorEspecial(4.0);
+        setValorPremium(5.0);
+        setValorSimples(3.50);
+        
+        
+        
+        JOptionPane.showMessageDialog(null, "BANCOS POPULADOS COM SUCESSO!!\n", "BANCOS POPULADOS", JOptionPane.INFORMATION_MESSAGE);
+        btnPopular.setVisible(false);
+    }//GEN-LAST:event_btnPopularActionPerformed
 
     /**
      * @param args the command line arguments
@@ -149,6 +268,7 @@ public class telaMenuInicial extends javax.swing.JFrame {
     private javax.swing.JButton btnAlterarPizzas;
     private javax.swing.JButton btnCadastrarClientes;
     private javax.swing.JButton btnCadastrarValores;
+    private javax.swing.JButton btnPopular;
     private javax.swing.JButton btnRealizarPedidos;
     private javax.swing.JButton btnVerPedidos;
     private javax.swing.JLabel jLabel1;
