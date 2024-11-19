@@ -8,10 +8,12 @@ package pizarria;
  *
  * @author rafae
  */
-public class Sabor {
+public  class Sabor {
     private String sabor;
 
-    public Sabor(String sabor){}
+    public Sabor(String sabor){
+    this.sabor = sabor;
+    }
 
     public String getSabor() {
         return sabor;
@@ -21,7 +23,10 @@ public class Sabor {
         this.sabor = sabor;
     }
 
-    public double getValor(){
+    public  double getValor(){
+        return 0;
+    }
+    public double setValor(){
         return 0;
     }
 }

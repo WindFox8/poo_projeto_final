@@ -227,30 +227,31 @@ public class telaCadastraCliente extends javax.swing.JFrame {
      
         
         //tratamentos de campos vazios e telefone correto
-        if (nome.isEmpty() || sobrenome.isEmpty() || Stel.isEmpty()){
-            JOptionPane.showMessageDialog(null,"Preencha todos os campos.\n", "CAMPOS OBRIGATÓRIOS", JOptionPane.INFORMATION_MESSAGE);
+        if (nome.isEmpty() || sobrenome.isEmpty() || Stel.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos.\n", "CAMPOS OBRIGATÓRIOS", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            if (Stel.matches(regex)){
-                //codigo ok
-                int id = incrementaCont();
-                String sId = Integer.toString(id);
-                Cliente c = new Cliente(nome,sobrenome,Stel,id);
-                System.out.println(c.getId());
-                BancoDadosClientes.listaClientes.put(sId,c);
-                this.TabelaModelClientes.setListaContatos(BancoDadosClientes.listaClientes);
-                this.tabClientes.setRowSelectionInterval(BancoDadosClientes.listaClientes.size()-1, BancoDadosClientes.listaClientes.size()-1);
-                
-                
-                //desabilitado para testes mais faceis
-                // txtNome.setText("");
-                // txtSobreNome.setText("");
-                // txtTel.setText("");
+            if (Stel.matches(regex)) {
+                if (existeNomeTelefone(nome, sobrenome)) {
+                    JOptionPane.showMessageDialog(null, "ESTE USUÁRIO JÁ ESTÁ CADSATRADO!!.\n", "NOME JA CADASTRADO", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    //codigo ok
+                    int id = incrementaCont();
+                    String sId = Integer.toString(id);
+                    Cliente c = new Cliente(nome, sobrenome, Stel, id);
+                    BancoDadosClientes.listaClientes.put(sId, c);
+                    this.TabelaModelClientes.setListaContatos(BancoDadosClientes.listaClientes);
+                    this.tabClientes.setRowSelectionInterval(BancoDadosClientes.listaClientes.size() - 1, BancoDadosClientes.listaClientes.size() - 1);
 
-
+                    //desabilitado para testes mais faceis
+                     txtNome.setText("");
+                     txtSobreNome.setText("");
+                     txtTel.setText("");
+                }
             } else {
-                JOptionPane.showMessageDialog(null,"Digite um número de telefone válido.\n", "ERRO TELEFONE", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Digite um número de telefone válido.\n", "ERRO TELEFONE", JOptionPane.INFORMATION_MESSAGE);
             }
         }
+
        
         
 
@@ -300,6 +301,9 @@ public class telaCadastraCliente extends javax.swing.JFrame {
         BancoDadosClientes.listaClientes.remove(id,c);
         clienteSelecionadoParaAtualizacao = null;
         linhaClicadaParaAtualizacao=-1;
+        txtNome.setText("");
+        txtSobreNome.setText("");
+        txtTel.setText("");
     }//GEN-LAST:event_txtExcluirActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -397,4 +401,16 @@ public class telaCadastraCliente extends javax.swing.JFrame {
     private javax.swing.JTextField txtSobreNome;
     private javax.swing.JTextField txtTel;
     // End of variables declaration//GEN-END:variables
+
+    private boolean existeNomeTelefone(String nome, String sobrenome) {
+    // Verificar se o telefone já está cadastrado nos clientes existentes
+    for (Cliente c : BancoDadosClientes.listaClientes.values()) {
+        if (c.getNome().equals(nome) && c.getSobreNome().equals(sobrenome)) {
+            return true; 
+        }
+    }
+    return false;
+}
+
+
 }
