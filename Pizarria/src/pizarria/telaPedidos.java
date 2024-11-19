@@ -215,7 +215,16 @@ public class telaPedidos extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //tela para cadastrar / editar o pedido
-        new telaFazerPedido().setVisible(true);
+        
+        if (this.clienteSelecionadoParaExibicao == null){
+            JOptionPane.showMessageDialog(null,"Selecione um usário!.\n", "ERRO SELECIONAR CLIENTE", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+             telaFazerPedido telaPedido = new telaFazerPedido();
+             telaPedido.setVisible(true);
+             
+             Cliente c = this.clienteSelecionadoParaExibicao;
+             telaPedido.setCliente(c);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void btnAttActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAttActionPerformed
