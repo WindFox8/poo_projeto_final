@@ -12,41 +12,45 @@ import java.util.List;
  * @author rafae
  */
 public abstract class Pizza {
+    //implementar forma 
+    private String forma;
     private List<Sabor> sabores = new ArrayList<>();
     private double dimensao;
     private double area;
     private double valor;
 
-    public Pizza(double dimensao, Sabor sabor1) {
+    public Pizza(String forma,double dimensao, Sabor sabor1) {
+        this.forma = forma;
         this.dimensao = dimensao;
         this.sabores.add(sabor1);
-        this.sabores.add(sabor1);
         this.area = calcularArea();   
-        this.valor = calcularValor(); 
+        this.valor = calcularValorTotal(); 
     }
 
-    public Pizza(double area, Sabor sabor1, boolean isArea) {
+    public Pizza(String forma, double area, Sabor sabor1, boolean isArea) {
+        this.forma = forma;
         this.area = area;
         this.sabores.add(sabor1);
-        this.sabores.add(sabor1);
         this.dimensao = calcularDimensao(); 
-        this.valor = calcularValor(); 
+        this.valor = calcularValorTotal(); 
     }
 
-    public Pizza(double dimensao, Sabor sabor1, Sabor sabor2) {
+    public Pizza(String forma, double dimensao, Sabor sabor1, Sabor sabor2) {
+        this.forma = forma;
         this.dimensao = dimensao;
         this.sabores.add(sabor1);
         this.sabores.add(sabor2);
         this.area = calcularArea();   
-        this.valor = calcularValor(); 
+        this.valor = calcularValorTotal(); 
     }
 
-    public Pizza(double area, Sabor sabor1, Sabor sabor2, boolean isArea) {
+    public Pizza(String forma, double area, Sabor sabor1, Sabor sabor2, boolean isArea) {
+        this.forma = forma;
         this.area = area;
         this.sabores.add(sabor1);
         this.sabores.add(sabor2);
         this.dimensao = calcularDimensao(); 
-        this.valor = calcularValor(); 
+        this.valor = calcularValorTotal(); 
     }
 
 
@@ -66,7 +70,7 @@ public abstract class Pizza {
     public void setDimensao(double dimensao) {
         this.dimensao = dimensao;
         this.area = calcularArea();  
-        this.valor = calcularValor(); 
+        this.valor = calcularValorTotal(); 
     }
 
     public double getArea() {
@@ -76,31 +80,38 @@ public abstract class Pizza {
     public void setArea(double area) {
         this.area = area;
         this.dimensao = calcularDimensao();
-        this.valor = calcularValor();   
+        this.valor = calcularValorTotal();   
     }
 
     public double getValor() {
         return valor;
     }
 
-    public double calcularValor() {
-        double mediaPrecoSabores = (sabores.get(0).getValor() + sabores.get(1).getValor()) / 2;
-        return getArea() * mediaPrecoSabores; 
+    public double calcularValorTotal() {
+        double mediaPrecoSabores;
+        if (sabores.size() >= 2) {
+            mediaPrecoSabores = (sabores.get(0).getValor() + sabores.get(1).getValor()) / 2;
+        } else {
+            mediaPrecoSabores = sabores.get(0).getValor(); // Se só há um sabor, usa o valor do único sabor
+        }
+        return getArea() * mediaPrecoSabores;
     }
 
-    Object getSabor2() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+  
+   public List<Sabor> getSabores (){
+       return this.sabores;
+   }
+    
+    public String getForma(){
+        return this.forma;
     }
 
-    Object getSabor1() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public double getPrecoTotal (){
+        return this.valor;
     }
-
-    Object getForma() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    Object getPrecoTotal() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
+    
+    
+    
 }

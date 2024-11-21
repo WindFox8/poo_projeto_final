@@ -14,13 +14,17 @@ import javax.swing.table.AbstractTableModel;
  * @author joaow
  */
 public class TableModelPizzas extends AbstractTableModel{
-    private String[] colunas=new String[]{"Forma","Área","Sabor 1", "Sabor 2","Preço Total"};
+    private String[] colunas=new String[]{"Forma","Sabor 1","Sabor 2", "Dimensao","Area","Preço Total"};
 
     private List<Pizza> lista=new ArrayList();
 
     
    
     public TableModelPizzas(){
+    }
+    
+    public TableModelPizzas(List<Pizza> pizzas){
+        this.lista = pizzas;
     }
 
 
@@ -49,13 +53,26 @@ public class TableModelPizzas extends AbstractTableModel{
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
+        
+        //tratar caso nao tenha 2 sabor e escrever nenhum na tabelinha
         Pizza pizza = lista.get(rowIndex);
+        String sabor2 = "";
+        List<Sabor> lista = pizza.getSabores();
+        String sabor1 = lista.get(0).getSabor();
+        if (lista.size() == 2){
+            sabor2 = lista.get(1).getSabor();
+        } else {
+            sabor2 = "Nenhum";
+        }
+        
+        
         switch (columnIndex) {
             case 0: return pizza.getForma();//if column 0 (code)
-            case 1: return pizza.getSabor1();//if column 1 (name)
-            case 2: return pizza.getSabor2();//if column 2 (birthday)
-            case 3: return pizza.getArea();//if column 2 (birthday)
-            case 4: return pizza.getPrecoTotal();
+            case 1: return sabor1;//if column 1 (name)
+            case 2: return sabor2;//if column 2 (birthday)
+            case 3: return pizza.getDimensao();
+            case 4: return pizza.getArea();//if column 2 (birthday)
+            case 5: return pizza.getPrecoTotal();
 
             default : return null;
         }
@@ -74,10 +91,10 @@ public class TableModelPizzas extends AbstractTableModel{
         this.fireTableRowsInserted(lista.size()-1,lista.size()-1);//update JTable
     }
 
-    public void setListaContatos(List<Pizza> pizzas) {
+    public void setListaPizzas(List<Pizza> pizzas) {
         this.lista = pizzas;
         this.fireTableDataChanged();
-        //this.fireTableRowsInserted(0,contatos.size()-1);//update JTable
+        this.fireTableRowsInserted(0,pizzas.size()-1);//update JTable
     }
     
     public void setListaPizzas(HashMap<String,Pizza> pizza) {

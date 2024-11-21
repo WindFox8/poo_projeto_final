@@ -10,19 +10,19 @@ package pizarria;
  */
 public class PizzaRedonda extends Pizza {
     public PizzaRedonda(double raio, Sabor sabor1) {
-        super(raio, sabor1);
+        super("Circular",raio, sabor1);
     }
 
     public PizzaRedonda(double raio, Sabor sabor1, Sabor sabor2) {
-        super(raio, sabor1, sabor2);
+        super("Circular", raio, sabor1, sabor2);
     }
 
     public PizzaRedonda(double area, Sabor sabor1, boolean isArea) {
-        super(area, sabor1, isArea);
+        super("Circular", area, sabor1, isArea);
     }
 
     public PizzaRedonda(double area, Sabor sabor1, Sabor sabor2, boolean isArea) {
-        super(area, sabor1, sabor2, isArea);
+        super("Circular", area, sabor1, sabor2, isArea);
     }
 
     @Override

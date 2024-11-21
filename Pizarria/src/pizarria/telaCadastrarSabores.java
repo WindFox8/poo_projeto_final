@@ -4,6 +4,7 @@
  */
 package pizarria;
 
+import java.util.List;
 import javax.swing.JOptionPane;
 import static pizarria.BancoDadosSabores.*;
 
@@ -223,17 +224,22 @@ public class telaCadastrarSabores extends javax.swing.JFrame {
 
     private boolean existeSabor(String nomeSabor) {
     // Verificar se o sabor existe nas listas de sabores
+    List<Sabor> saboresSimples = getSaboresSimples();
 
-    for (SaborSimples saborSimples : saboresSimples) {
+    for (Sabor saborSimples : saboresSimples) {
         if (saborSimples.getSabor().equalsIgnoreCase(nomeSabor)) {
             return true;  // Sabor encontrado na lista de Simples
         }
     }
+    
+    List<Sabor> saboresEspecial = getSaboresEspeciais();
     for (Sabor saborEspecial : saboresEspecial) {
         if (saborEspecial.getSabor().equalsIgnoreCase(nomeSabor)) {
             return true;  // Sabor encontrado na lista de Especial
         }
     }
+    
+    List<Sabor> saboresPremium = getSaboresPremium();
     for (Sabor saborPremium : saboresPremium) {
         if (saborPremium.getSabor().equalsIgnoreCase(nomeSabor)) {
             return true;  // Sabor encontrado na lista de Premium

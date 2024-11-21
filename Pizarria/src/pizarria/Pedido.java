@@ -24,9 +24,7 @@ public class Pedido {
     }
 
     public Pedido(int id) {
-        this.id = count;
-        this.estado = Estado.ABERTO;    
-        count++; 
+        this.id = id;
     }
     
     public Pedido (){
@@ -47,10 +45,19 @@ public class Pedido {
     public void addPizza(Pizza item) {
         listaItens.add(item);
     }
-
+    public Pizza getPizza (int i){
+        return listaItens.get(i);
+    }
+    
     public void removerPizza(Pizza item) {
         if (item != null && listaItens.contains(item)) {
             listaItens.remove(item);
         }
+    }
+    
+    
+    
+    public List<Pizza> getListPizza (){
+        return listaItens;
     }
 }

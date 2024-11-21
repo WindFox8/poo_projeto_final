@@ -188,34 +188,35 @@ public class telaMenuInicial extends javax.swing.JFrame {
         sId = Integer.toString(id);
         Cliente c5 = new Cliente("Teste 5", "Sobrenome 5", "42999788482", id);
         BancoDadosClientes.listaClientes.put(sId, c5);
-        
+      
+                   
         //popular banco de sabores
           
-        SaborPremium saborPremium1 = new SaborPremium("Toscana");
+        Sabor saborPremium1 = new SaborPremium("Toscana");
         adicionarSaborPremium(saborPremium1);
 
-        SaborPremium saborPremium2 = new SaborPremium("Frango com Catupiry");
+        Sabor saborPremium2 = new SaborPremium("Frango com Catupiry");
         adicionarSaborPremium(saborPremium2);
 
-        SaborPremium saborPremium3 = new SaborPremium("Carne Seca com Abóbora");
+        Sabor saborPremium3 = new SaborPremium("Carne Seca com Abóbora");
         adicionarSaborPremium(saborPremium3);
         
-        SaborSimples saborSimples1 = new SaborSimples("Margarita");
+        Sabor saborSimples1 = new SaborSimples("Margarita");
         adicionarSaborSimples(saborSimples1);
 
-        SaborSimples saborSimples2 = new SaborSimples("Calabresa");
+        Sabor saborSimples2 = new SaborSimples("Calabresa");
         adicionarSaborSimples(saborSimples2);
 
-        SaborSimples saborSimples3 = new SaborSimples("Margherita");
+        Sabor saborSimples3 = new SaborSimples("Margherita");
         adicionarSaborSimples(saborSimples3);
        
-        Sabor saborEspecial1 = new Sabor("Frango com Catupiry");
+        Sabor saborEspecial1 = new SaborEspecial("Frango com Catupiry");
         adicionarSaborEspecial(saborEspecial1);
 
-        Sabor saborEspecial2 = new Sabor("Portuguesa");
+        Sabor saborEspecial2 = new SaborEspecial("Portuguesa");
         adicionarSaborEspecial(saborEspecial2);
 
-        Sabor saborEspecial3 = new Sabor("4 Queijos");
+        Sabor saborEspecial3 = new SaborEspecial("4 Queijos");
         adicionarSaborEspecial(saborEspecial3);
         
         //popula valores dos tipos de pizza
