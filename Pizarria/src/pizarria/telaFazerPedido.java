@@ -4,7 +4,9 @@
  */
 package pizarria;
 
+import java.util.HashSet;
 import javax.swing.JOptionPane;
+import static pizarria.BancoDadosSabores.*;
 
 /**
  *
@@ -18,9 +20,11 @@ public class telaFazerPedido extends javax.swing.JFrame {
     public telaFazerPedido() {
         initComponents();
     }
-        
-        private TableModelPizzas TabelaModelPizzas = new TableModelPizzas();
-        private Cliente clienteEscolhido;
+
+    private Cliente clienteEscolhido;
+    private TableModelPizzas TabelaModelPizzas = new TableModelPizzas();
+    private Pizza pizzaSelecionada;
+    private int linhaClicadaParaRemoção;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,7 +37,6 @@ public class telaFazerPedido extends javax.swing.JFrame {
 
         grupoBotao = new javax.swing.ButtonGroup();
         btnSair = new javax.swing.JButton();
-        btnSalvar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         boxForma = new javax.swing.JComboBox<>();
         btnArea = new javax.swing.JRadioButton();
@@ -44,7 +47,7 @@ public class telaFazerPedido extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         boxSabor2 = new javax.swing.JComboBox<>();
-        btnCalcular = new javax.swing.JButton();
+        btnAdicionar = new javax.swing.JButton();
         labelValorTotal = new javax.swing.JLabel();
         labelId = new javax.swing.JLabel();
         labelCliente = new javax.swing.JLabel();
@@ -54,7 +57,8 @@ public class telaFazerPedido extends javax.swing.JFrame {
         boxStatus = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablePizzas = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        btnCalcular = new javax.swing.JButton();
+        btnRemover = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -67,13 +71,6 @@ public class telaFazerPedido extends javax.swing.JFrame {
         btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSairActionPerformed(evt);
-            }
-        });
-
-        btnSalvar.setText("Salvar e Sair");
-        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalvarActionPerformed(evt);
             }
         });
 
@@ -90,7 +87,7 @@ public class telaFazerPedido extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        boxSabor1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        boxSabor1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {}));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("SABOR 1");
@@ -98,12 +95,12 @@ public class telaFazerPedido extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setText("SABOR 2");
 
-        boxSabor2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        boxSabor2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  }));
 
-        btnCalcular.setText("CALCULAR");
-        btnCalcular.addActionListener(new java.awt.event.ActionListener() {
+        btnAdicionar.setText("Adicionar");
+        btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCalcularActionPerformed(evt);
+                btnAdicionarActionPerformed(evt);
             }
         });
 
@@ -132,12 +129,24 @@ public class telaFazerPedido extends javax.swing.JFrame {
         boxStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { }));
 
         tablePizzas.setModel(TabelaModelPizzas);
+        tablePizzas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablePizzasMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablePizzas);
 
-        jButton1.setText("Adicionar Pizza");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnCalcular.setText("Calcular");
+        btnCalcular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnCalcularActionPerformed(evt);
+            }
+        });
+
+        btnRemover.setText("Remover");
+        btnRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverActionPerformed(evt);
             }
         });
 
@@ -171,66 +180,82 @@ public class telaFazerPedido extends javax.swing.JFrame {
                                 .addComponent(labelCliente))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnSair)
-                                    .addComponent(jLabel2)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(labelValorTotal)
                                             .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(btnDimensao)
-                                                    .addComponent(btnArea)
-                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addComponent(labelValorTotal)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(txtAreaDimensao, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(jLabel3))
-                                                            .addGroup(layout.createSequentialGroup()
-                                                                .addGap(121, 121, 121)
-                                                                .addComponent(btnCalcular)))))
-                                                .addGap(145, 145, 145))
+                                                .addComponent(txtAreaDimensao, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jLabel3)
+                                                .addGap(120, 120, 120)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(btnSair)
+                                            .addComponent(jLabel2))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 242, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(boxForma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jButton1)
-                                                .addGap(48, 48, 48)))
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                                                .addComponent(btnRemover))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(btnDimensao)
+                                                    .addComponent(btnArea))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(btnAdicionar))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                .addComponent(btnCalcular)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnSalvar)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(boxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel1))
-                                        .addGap(12, 12, 12)))))
+                                    .addComponent(boxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1))
+                                .addGap(12, 12, 12)))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelId)
-                    .addComponent(labelCliente))
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(labelId)
+                            .addComponent(labelCliente))
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(boxForma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(boxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(68, 68, 68)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(boxForma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(boxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(7, 7, 7))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(btnRemover)
+                                .addGap(18, 18, 18)))
                         .addComponent(jLabel3)
-                        .addGap(1, 1, 1)
-                        .addComponent(btnArea)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDimensao)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(btnArea)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnDimensao))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(11, 11, 11)
+                                .addComponent(btnAdicionar)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtAreaDimensao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(39, 39, 39)
@@ -245,17 +270,12 @@ public class telaFazerPedido extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(boxSabor1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(boxSabor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                         .addComponent(btnCalcular)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(labelValorTotal)
-                        .addGap(38, 38, 38))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSair)
-                    .addComponent(btnSalvar))
+                        .addGap(38, 38, 38)))
+                .addComponent(btnSair)
                 .addContainerGap())
         );
 
@@ -268,140 +288,482 @@ public class telaFazerPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-       //popular combo boxes e inicializar id do pedido
-       String[] formas = {"Quadrada","Circular","Triangular"};
-       String[] tiposPizzas = {"Simples","Especial","Premium"};
-       String[] status = {"Aberto","À Caminho","Entregue"};
-       Cliente c = clienteEscolhido;
-       
-       for (String tipos : formas)
-        boxForma.addItem(tipos);
-       
-       for (String pizzas : tiposPizzas){
-         boxTipos1.addItem(pizzas);
-         boxTipos2.addItem(pizzas);
-       }
-       
-       for (String estado : status){
-           boxStatus.addItem(estado);
-       }
-       
-       labelId.setText("ID do Pedido: " + BancoDadosClientes.idPedido);
-       labelCliente.setText("CLIENTE:" + c.getNome());
-       
-      
+        //popular combo boxes e inicializar id do pedido e tabela dos pedidos
+        String[] formas = {"Quadrada", "Circular", "Triangular"};
+        String[] tiposPizzas = {"Simples", "Especial", "Premium"};
+        String[] status = {"Aberto", "À Caminho", "Entregue"};
+        Cliente c = clienteEscolhido;
+
+        for (String tipos : formas) {
+            boxForma.addItem(tipos);
+        }
+
+        for (String pizzas : tiposPizzas) {
+            boxTipos1.addItem(pizzas);
+            boxTipos2.addItem(pizzas);
+        }
+
+        for (String estado : status) {
+            boxStatus.addItem(estado);
+        }
+        //vai usar o ID do cliente apenas porque um cliente tem um pedido por vez
+        labelId.setText("ID do Pedido: " + c.getId());
+        labelCliente.setText("CLIENTE:" + c.getNome());
+
+        this.TabelaModelPizzas.setListaPizzas(c.Pedido.getListPizza());
+
 
     }//GEN-LAST:event_formComponentShown
-
-    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        // salvar as coisinhas
-        BancoDadosClientes.incrementaIdPedido();
-        this.dispose();
-    }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void boxTipos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxTipos1ActionPerformed
         // Mudar sabores de acordo com o filtro selecionado
         Object itemSelecionado = boxTipos1.getSelectedItem();
         String texto = itemSelecionado + "";
-        
-        switch (texto){
+
+        switch (texto) {
             case "Simples":
                 //fazer mostrar lista so de simples
+                boxSabor1.removeAllItems();
+                for (SaborSimples sabor : saboresSimples) {
+                    boxSabor1.addItem(sabor.getSabor());
+                }
                 break;
             case "Especial":
+                boxSabor1.removeAllItems();
+                for (Sabor sabor : saboresEspecial) {
+                    boxSabor1.addItem(sabor.getSabor());
+                }
                 //mostar lista de especial
                 break;
             case "Premium":
                 //mostra lista preimum
+                boxSabor1.removeAllItems();
+                for (Sabor sabor : saboresPremium) {
+                    boxSabor1.addItem(sabor.getSabor());
+                }
                 break;
-            }
+        }
     }//GEN-LAST:event_boxTipos1ActionPerformed
 
     private void boxTipos2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxTipos2ActionPerformed
         // Mudar sabores de acordo com o filtro selecioando
         Object itemSelecionado = boxTipos2.getSelectedItem();
         String texto = itemSelecionado + "";
-        
-        switch (texto){
+
+        switch (texto) {
             case "Simples":
                 //fazer mostrar lista so de simples
+                boxSabor2.removeAllItems();
+                for (SaborSimples sabor : saboresSimples) {
+                    boxSabor2.addItem(sabor.getSabor());
+                }
                 break;
             case "Especial":
                 //mostar lista de especial
+                boxSabor2.removeAllItems();
+                for (Sabor sabor : saboresEspecial) {
+                    boxSabor2.addItem(sabor.getSabor());
+                }
                 break;
             case "Premium":
                 //mostra lista preimum
+                boxSabor2.removeAllItems();
+                for (Sabor sabor : saboresPremium) {
+                    boxSabor2.addItem(sabor.getSabor());
+                }
+                break;
+            case "Nenhum":
+                boxSabor2.removeAllItems();
                 break;
             default:
-                //não mostrar nada
+            //não mostrar nada
             }
     }//GEN-LAST:event_boxTipos2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
-        // TODO add your handling code here:
-        // Fazer o calculo do valor da pizza
-        //pegar todos os valores que pizza precisa
+        //calcular o valor da pizza e criar booleano para obrigar a calcular o valor antes de adicionar
+        //sera quase uma replica do botao de casdatrar mas ao inves de cadastrar, vai apenas mostrar o valor da pizza
+        boolean calculado = false;
+        String formaSelecionada = boxForma.getSelectedItem() + "";
         String tipo1 = boxTipos1.getSelectedItem() + "";
         String tipo2 = boxTipos2.getSelectedItem() + "";
         String forma = boxForma.getSelectedItem() + "";
-        String Sabor1 = boxSabor1.getSelectedItem() + "";
-        String Sabor2 = boxSabor2.getSelectedItem() + "";
         String sValor = txtAreaDimensao.getText();
-         
-         boolean temSabor2 = "Nenhum".equals(Sabor2);
-         double valor = 0;
 
+        // apenas para validação se tem dois sabores ou nao
+        String Sabor2 = boxSabor2.getSelectedItem() + "";
+        boolean nTemSabor2;
+        String saber2sabor = boxSabor2.getSelectedItem() + "";
+        if (boxSabor2.getSelectedItem() == null) {
+            nTemSabor2 = true;
+        } else {
+            nTemSabor2 = false;
+        }
+
+        double valor = 0;
         try {
             valor = Double.parseDouble(sValor);
         } catch (java.lang.NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Insira um valor válido numérico.\n", "VALOR VÁLIDO", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Insira um valor numérico válido.\n", "VALOR VÁLIDO", JOptionPane.INFORMATION_MESSAGE);
         }
-        
-        //cálculo da pizza
-        switch (forma){
+
+        switch (formaSelecionada) {
             case "Quadrada":
-                if (btnArea.isSelected()){
+                if (btnArea.isSelected()) {
                     //calcula com base na área
-                    //EM CONSTRUÇÃO
-                    /*
-                        if (temSabor2){
-                            PizzaQuadrada pizza = new PizzaQuadrada(valor, Sabor1, true);
-                        } else {
-                            PizzaQuadrada pizza = new PizzaQuadrada(valor, Sabor1, Sabor1, true);
-                        }
-                    */
-                            
-                } if (btnDimensao.isSelected()){
+                    //nao tiver 2 sabores
+                    if (nTemSabor2) {
+                        //cria um sabor temporario para poder colocar dentro da pizza (Sabor sabor1)
+                        Sabor sabor1 = new SaborSimples(boxSabor1.getSelectedItem() + "");
+                        PizzaQuadrada pizza = new PizzaQuadrada(valor, sabor1, true);
+
+                    } else {
+                        //tem 2 sabores
+                        //cria um sabor temporario para poder colocar dentro da pizza (Sabor sabor1 e Sabor sabor2)
+                        Sabor sabor1 = new SaborSimples(boxSabor1.getSelectedItem() + "");
+                        Sabor sabor2 = new SaborSimples(boxSabor2.getSelectedItem() + "");
+                        PizzaQuadrada pizza = new PizzaQuadrada(valor, sabor1, sabor2, true);
+
+                    }
+                } else if (btnDimensao.isSelected()) {
                     //calcula com base na dimensão
+                    if (nTemSabor2) {
+                        //cria um sabor temporario para poder colocar dentro da pizza (Sabor sabor1)
+                        Sabor sabor1 = new SaborSimples(boxSabor1.getSelectedItem() + "");
+                        PizzaQuadrada pizza = new PizzaQuadrada(valor, sabor1);
+
+                    } else {
+                        //tem 2 sabores
+                        //cria um sabor temporario para poder colocar dentro da pizza (Sr sabor1 e Sabor sabor2)
+                        Sabor sabor1 = new SaborSimples(boxSabor1.getSelectedItem() + "");
+                        Sabor sabor2 = new SaborSimples(boxSabor2.getSelectedItem() + "");
+                        PizzaQuadrada pizza = new PizzaQuadrada(valor, sabor1, sabor2);
+
+                    }
                 } else {
-                    System.out.println("DEU ERRO");
+                    System.out.println("DEU ERRO NA PIZZA QUADRADA");
                 }
                 break;
             case "Circular":
-                  if (btnArea.isSelected()){
+                if (btnArea.isSelected()) {
                     //calcula com base na área
-                } if (btnDimensao.isSelected()){
+                    if (nTemSabor2) {
+                        //cria um sabor temporario para poder colocar dentro da pizza (Sabor sabor1)
+                        Sabor sabor1 = new SaborSimples(boxSabor1.getSelectedItem() + "");
+                        PizzaRedonda pizza = new PizzaRedonda(valor, sabor1, true);
+
+                    } else {
+                        //tem 2 sabores
+                        //cria um sabor temporario para poder colocar dentro da pizza (Sabor sabor1 e Sabor sabor2)
+                        Sabor sabor1 = new SaborSimples(boxSabor1.getSelectedItem() + "");
+                        Sabor sabor2 = new SaborSimples(boxSabor2.getSelectedItem() + "");
+                        PizzaRedonda pizza = new PizzaRedonda(valor, sabor1, sabor2, true);
+
+                    }
+                } else if (btnDimensao.isSelected()) {
                     //calcula com base na dimensão
+                    if (nTemSabor2) {
+                        //cria um sabor temporario para poder colocar dentro da pizza (Sabor sabor1)
+                        Sabor sabor1 = new SaborSimples(boxSabor1.getSelectedItem() + "");
+                        PizzaRedonda pizza = new PizzaRedonda(valor, sabor1);
+
+                    } else {
+                        //tem 2 sabores
+                        //cria um sabor temporario para poder colocar dentro da pizza (Sabor sabor1 e Sabor sabor2)
+                        Sabor sabor1 = new SaborSimples(boxSabor1.getSelectedItem() + "");
+                        Sabor sabor2 = new SaborSimples(boxSabor2.getSelectedItem() + "");
+                        PizzaRedonda pizza = new PizzaRedonda(valor, sabor1, sabor2);
+
+                    }
                 } else {
-                    System.out.println("DEU ERRO");
+                    System.out.println("DEU ERRO NA PIZZA CIRCULAR");
                 }
                 break;
             case "Triangular":
-                  if (btnArea.isSelected()){
+                if (btnArea.isSelected()) {
                     //calcula com base na área
-                } if (btnDimensao.isSelected()){
+                    if (nTemSabor2) {
+                        //cria um sabor temporario para poder colocar dentro da pizza (Sabor sabor1)
+                        Sabor sabor1 = new SaborSimples(boxSabor1.getSelectedItem() + "");
+                        PizzaTriangular pizza = new PizzaTriangular(valor, sabor1, true);
+                    } else {
+                        //tem 2 sabores
+                        //cria um sabor temporario para poder colocar dentro da pizza (Sabor sabor1 e Sabor sabor2)
+                        Sabor sabor1 = new SaborSimples(boxSabor1.getSelectedItem() + "");
+                        Sabor sabor2 = new SaborSimples(boxSabor2.getSelectedItem() + "");
+                        PizzaTriangular pizza = new PizzaTriangular(valor, sabor1, sabor2, true);
+
+                    }
+                } else if (btnDimensao.isSelected()) {
                     //calcula com base na dimensão
+                    if (nTemSabor2) {
+                        //cria um sabor temporario para poder colocar dentro da pizza (Sabor sabor1)
+                        Sabor sabor1 = new SaborSimples(boxSabor1.getSelectedItem() + "");
+                        PizzaTriangular pizza = new PizzaTriangular(valor, sabor1);
+
+                    } else {
+                        //tem 2 sabores
+                        //cria um sabor temporario para poder colocar dentro da pizza (Sabor sabor1 e Sabor sabor2)
+                        Sabor sabor1 = new SaborSimples(boxSabor1.getSelectedItem() + "");
+                        Sabor sabor2 = new SaborSimples(boxSabor2.getSelectedItem() + "");
+                        PizzaTriangular pizza = new PizzaTriangular(valor, sabor1, sabor2);
+                    }
+
                 } else {
-                    System.out.println("DEU ERRO");
+                    System.out.println("DEU ERRO NA PIZZA TRIANGULAR");
                 }
                 break;
-            default : System.out.println("ERRO EM ALGO");;
+            default:
+                JOptionPane.showMessageDialog(null, "SELECIONE UM FORMATO.\n", "SELECIONE FORMATO", JOptionPane.INFORMATION_MESSAGE);
         }
+
+
     }//GEN-LAST:event_btnCalcularActionPerformed
+
+    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+        // TODO add your handling code here:
+        // Inserir pizza no pedido
+        //pegar todos os valores que pizza precisa
+
+        String tipo1 = boxTipos1.getSelectedItem() + "";
+        String tipo2 = boxTipos2.getSelectedItem() + "";
+        String forma = boxForma.getSelectedItem() + "";
+        String sValor = txtAreaDimensao.getText();
+
+        String Sabor2 = boxSabor2.getSelectedItem() + ""; // apenas para validação se tem dois sabores ou nao
+
+        boolean nTemSabor2;
+        String saber2sabor = boxSabor2.getSelectedItem() + "";
+        if (boxSabor2.getSelectedItem() == null) {
+            nTemSabor2 = true;
+        } else {
+            nTemSabor2 = false;
+        }
+
+        //valorDimensaoArea da pizza
+        double valor = 0;
+        try {
+            valor = Double.parseDouble(sValor);
+
+            //Inserir pizza no pedido
+            switch (forma) {
+                case "Quadrada":
+                    if (btnArea.isSelected()) {
+                        //calcula com base na área
+                        //nao tiver 2 sabores
+                        if (nTemSabor2) {
+                            int indexSabor1 = boxSabor1.getSelectedIndex();
+                            int indexTipo1 = boxTipos1.getSelectedIndex();
+                      
+                            if (indexTipo1 == 0) {
+                                Sabor sabor1 = saboresSimples.get(indexSabor1);
+                                PizzaQuadrada pizza = new PizzaQuadrada(valor, sabor1, true);
+                                // pegando o cliente para adicionar a pizza no pedido dele
+                                Cliente c = this.clienteEscolhido;
+                                c.Pedido.addPizza(pizza);
+                                this.TabelaModelPizzas.setListaPizzas(c.Pedido.getListPizza());
+
+                            } else if (indexTipo1 == 1) {
+                                Sabor sabor1 = saboresEspecial.get(indexSabor1);
+                                PizzaQuadrada pizza = new PizzaQuadrada(valor, sabor1, true);
+                                // pegando o cliente para adicionar a pizza no pedido dele
+                                Cliente c = this.clienteEscolhido;
+                                c.Pedido.addPizza(pizza);
+                                this.TabelaModelPizzas.setListaPizzas(c.Pedido.getListPizza());
+
+                            } else if (indexTipo1 == 2) {
+                                Sabor sabor1 = saboresPremium.get(indexSabor1);
+                                PizzaQuadrada pizza = new PizzaQuadrada(valor, sabor1, true);
+                                // pegando o cliente para adicionar a pizza no pedido dele
+                                Cliente c = this.clienteEscolhido;
+                                c.Pedido.addPizza(pizza);
+                                this.TabelaModelPizzas.setListaPizzas(c.Pedido.getListPizza());
+
+                            }
+
+                        } else {
+                            //tem 2 sabores
+                           int indexSabor1 = boxSabor1.getSelectedIndex();
+                            int indexTipo1 = boxTipos1.getSelectedIndex();
+                            int indexSabor2 = boxSabor2.getSelectedIndex();
+                            int indexTipo2 = boxTipos2.getSelectedIndex();
+                            
+                            
+                            if (indexTipo1 == 0) {
+                                Sabor sabor1 = saboresSimples.get(indexSabor1);
+                                Sabor sabor2 = saboresSimples.get(indexSabor2);
+                                PizzaQuadrada pizza = new PizzaQuadrada(valor, sabor1, true);
+                                // pegando o cliente para adicionar a pizza no pedido dele
+                                Cliente c = this.clienteEscolhido;
+                                c.Pedido.addPizza(pizza);
+                                this.TabelaModelPizzas.setListaPizzas(c.Pedido.getListPizza());
+
+                            } else if (indexTipo1 == 1) {
+                                Sabor sabor1 = saboresEspecial.get(indexSabor1);
+                                PizzaQuadrada pizza = new PizzaQuadrada(valor, sabor1, true);
+                                // pegando o cliente para adicionar a pizza no pedido dele
+                                Cliente c = this.clienteEscolhido;
+                                c.Pedido.addPizza(pizza);
+                                this.TabelaModelPizzas.setListaPizzas(c.Pedido.getListPizza());
+
+                            } else if (indexTipo1 == 2) {
+                                Sabor sabor1 = saboresPremium.get(indexSabor1);
+                                PizzaQuadrada pizza = new PizzaQuadrada(valor, sabor1, true);
+                                // pegando o cliente para adicionar a pizza no pedido dele
+                                Cliente c = this.clienteEscolhido;
+                                c.Pedido.addPizza(pizza);
+                                this.TabelaModelPizzas.setListaPizzas(c.Pedido.getListPizza());
+
+                            }
+                        }
+                    } else if (btnDimensao.isSelected()) {
+                        //calcula com base na dimensão
+                        if (nTemSabor2) {
+                            //cria um sabor temporario para poder colocar dentro da pizza (Sabor sabor1)
+                            Sabor sabor1 = new SaborSimples(boxSabor1.getSelectedItem() + "");
+                            PizzaQuadrada pizza = new PizzaQuadrada(valor, sabor1);
+                            // pegando o cliente para adicionar a pizza no pedido dele
+                            Cliente c = this.clienteEscolhido;
+                            c.Pedido.addPizza(pizza);
+                            this.TabelaModelPizzas.setListaPizzas(c.Pedido.getListPizza());
+                        } else {
+                            //tem 2 sabores
+                            //cria um sabor temporario para poder colocar dentro da pizza (Sabor sabor1 e Sabor sabor2)
+                            Sabor sabor1 = new SaborSimples(boxSabor1.getSelectedItem() + "");
+                            Sabor sabor2 = new SaborSimples(boxSabor2.getSelectedItem() + "");
+                            PizzaQuadrada pizza = new PizzaQuadrada(valor, sabor1, sabor2);
+                            // pegando o cliente para adicionar a pizza no pedido dele
+                            Cliente c = this.clienteEscolhido;
+                            c.Pedido.addPizza(pizza);
+                            this.TabelaModelPizzas.setListaPizzas(c.Pedido.getListPizza());
+                        }
+                    } else {
+                        System.out.println("DEU ERRO NA PIZZA QUADRADA");
+                    }
+                    break;
+                case "Circular":
+                    if (btnArea.isSelected()) {
+                        //calcula com base na área
+                        if (nTemSabor2) {
+                            //cria um sabor temporario para poder colocar dentro da pizza (Sabor sabor1)
+                            Sabor sabor1 = new SaborSimples(boxSabor1.getSelectedItem() + "");
+                            PizzaRedonda pizza = new PizzaRedonda(valor, sabor1, true);
+                            // pegando o cliente para adicionar a pizza no pedido dele
+                            Cliente c = this.clienteEscolhido;
+                            c.Pedido.addPizza(pizza);
+                            this.TabelaModelPizzas.setListaPizzas(c.Pedido.getListPizza());
+                        } else {
+                            //tem 2 sabores
+                            //cria um sabor temporario para poder colocar dentro da pizza (Sabor sabor1 e Sabor sabor2)
+                            Sabor sabor1 = new SaborSimples(boxSabor1.getSelectedItem() + "");
+                            Sabor sabor2 = new SaborSimples(boxSabor2.getSelectedItem() + "");
+                            PizzaRedonda pizza = new PizzaRedonda(valor, sabor1, sabor2, true);
+                            // pegando o cliente para adicionar a pizza no pedido dele
+                            Cliente c = this.clienteEscolhido;
+                            c.Pedido.addPizza(pizza);
+                            this.TabelaModelPizzas.setListaPizzas(c.Pedido.getListPizza());
+                        }
+                    } else if (btnDimensao.isSelected()) {
+                        //calcula com base na dimensão
+                        if (nTemSabor2) {
+                            //cria um sabor temporario para poder colocar dentro da pizza (Sabor sabor1)
+                            Sabor sabor1 = new SaborSimples(boxSabor1.getSelectedItem() + "");
+                            PizzaRedonda pizza = new PizzaRedonda(valor, sabor1);
+                            // pegando o cliente para adicionar a pizza no pedido dele
+                            Cliente c = this.clienteEscolhido;
+                            c.Pedido.addPizza(pizza);
+                            this.TabelaModelPizzas.setListaPizzas(c.Pedido.getListPizza());
+                        } else {
+                            //tem 2 sabores
+                            //cria um sabor temporario para poder colocar dentro da pizza (Sabor sabor1 e Sabor sabor2)
+                            Sabor sabor1 = new SaborSimples(boxSabor1.getSelectedItem() + "");
+                            Sabor sabor2 = new SaborSimples(boxSabor2.getSelectedItem() + "");
+                            PizzaRedonda pizza = new PizzaRedonda(valor, sabor1, sabor2);
+                            // pegando o cliente para adicionar a pizza no pedido dele
+                            Cliente c = this.clienteEscolhido;
+                            c.Pedido.addPizza(pizza);
+                            this.TabelaModelPizzas.setListaPizzas(c.Pedido.getListPizza());
+                        }
+                    } else {
+                        System.out.println("DEU ERRO NA PIZZA CIRCULAR");
+                    }
+                    break;
+                case "Triangular":
+                    if (btnArea.isSelected()) {
+                        //calcula com base na área
+                        if (nTemSabor2) {
+                            //cria um sabor temporario para poder colocar dentro da pizza (Sabor sabor1)
+                            Sabor sabor1 = new SaborSimples(boxSabor1.getSelectedItem() + "");
+                            PizzaTriangular pizza = new PizzaTriangular(valor, sabor1, true);
+                            // pegando o cliente para adicionar a pizza no pedido dele
+                            Cliente c = this.clienteEscolhido;
+                            c.Pedido.addPizza(pizza);
+                            this.TabelaModelPizzas.setListaPizzas(c.Pedido.getListPizza());
+                        } else {
+                            //tem 2 sabores
+                            //cria um sabor temporario para poder colocar dentro da pizza (Sabor sabor1 e Sabor sabor2)
+                            Sabor sabor1 = new SaborSimples(boxSabor1.getSelectedItem() + "");
+                            Sabor sabor2 = new SaborSimples(boxSabor2.getSelectedItem() + "");
+                            PizzaTriangular pizza = new PizzaTriangular(valor, sabor1, sabor2, true);
+                            // pegando o cliente para adicionar a pizza no pedido dele
+                            Cliente c = this.clienteEscolhido;
+                            c.Pedido.addPizza(pizza);
+                            this.TabelaModelPizzas.setListaPizzas(c.Pedido.getListPizza());
+                        }
+                    } else if (btnDimensao.isSelected()) {
+                        //calcula com base na dimensão
+                        if (nTemSabor2) {
+                            //cria um sabor temporario para poder colocar dentro da pizza (Sabor sabor1)
+                            Sabor sabor1 = new SaborSimples(boxSabor1.getSelectedItem() + "");
+                            PizzaTriangular pizza = new PizzaTriangular(valor, sabor1);
+                            // pegando o cliente para adicionar a pizza no pedido dele
+                            Cliente c = this.clienteEscolhido;
+                            c.Pedido.addPizza(pizza);
+                            this.TabelaModelPizzas.setListaPizzas(c.Pedido.getListPizza());
+                        } else {
+                            //tem 2 sabores
+                            //cria um sabor temporario para poder colocar dentro da pizza (Sabor sabor1 e Sabor sabor2)
+                            Sabor sabor1 = new SaborSimples(boxSabor1.getSelectedItem() + "");
+                            Sabor sabor2 = new SaborSimples(boxSabor2.getSelectedItem() + "");
+                            PizzaTriangular pizza = new PizzaTriangular(valor, sabor1, sabor2);
+                            // pegando o cliente para adicionar a pizza no pedido dele
+                            Cliente c = this.clienteEscolhido;
+                            c.Pedido.addPizza(pizza);
+                            this.TabelaModelPizzas.setListaPizzas(c.Pedido.getListPizza());
+                        }
+
+                    } else {
+                        System.out.println("DEU ERRO NA PIZZA TRIANGULAR");
+                    }
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "SELECIONE UM FORMATO.\n", "SELECIONE FORMATO", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (java.lang.NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Insira um valor válido numérico.\n", "VALOR VÁLIDO", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAdicionarActionPerformed
+
+    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+        //remover pizza selecionada
+        if (this.pizzaSelecionada != null) {
+            Cliente c = this.clienteEscolhido;
+            c.Pedido.getListPizza().remove(this.linhaClicadaParaRemoção);
+            this.TabelaModelPizzas.setListaPizzas(c.Pedido.getListPizza());
+
+        } else {
+            JOptionPane.showMessageDialog(null, "SELECIONE UMA PIZZA PRIMEIRO.\n", "SELECIONE PIZZA", JOptionPane.INFORMATION_MESSAGE);
+
+        }
+
+
+    }//GEN-LAST:event_btnRemoverActionPerformed
+
+    private void tablePizzasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePizzasMouseClicked
+        //selecionar pizza clicada para remoção
+        this.linhaClicadaParaRemoção = this.tablePizzas.rowAtPoint(evt.getPoint());
+
+    }//GEN-LAST:event_tablePizzasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -434,6 +796,7 @@ public class telaFazerPedido extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new telaFazerPedido().setVisible(true);
+
             }
         });
     }
@@ -445,13 +808,13 @@ public class telaFazerPedido extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> boxStatus;
     private javax.swing.JComboBox<String> boxTipos1;
     private javax.swing.JComboBox<String> boxTipos2;
+    private javax.swing.JButton btnAdicionar;
     private javax.swing.JRadioButton btnArea;
     private javax.swing.JButton btnCalcular;
     private javax.swing.JRadioButton btnDimensao;
+    private javax.swing.JButton btnRemover;
     private javax.swing.JButton btnSair;
-    private javax.swing.JButton btnSalvar;
     private javax.swing.ButtonGroup grupoBotao;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

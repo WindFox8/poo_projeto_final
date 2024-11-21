@@ -9,18 +9,24 @@ package pizarria;
  * @author rafae
  */
 public class SaborSimples extends Sabor{
-    private static double valor;
+    private static double valorSimples;
 
     public SaborSimples(String sabor){
       super(sabor);
     }
 
   
-    public static double getValorSimples() {
-      return valor;
+     @Override
+    public double getValor() {
+        return this.valorSimples;
     }
 
-    public static void setValorSimples(double valorR) {
-        valor = valorR;
+    public static void setValorSimples(double valorR){
+       valorSimples = valorR;
+   }
+    
+    public static double getValorSimples(){
+        return valorSimples;
     }
+    
 }

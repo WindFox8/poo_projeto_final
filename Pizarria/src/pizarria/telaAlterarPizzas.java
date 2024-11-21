@@ -128,6 +128,8 @@ public class telaAlterarPizzas extends javax.swing.JFrame {
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         //popular os fields com valores
+       
+        
         String precoSimples = getValorSimples()+ "";
         String precoEspecial = getValorEspecial()+"";
         String precoPremium = getValorPremium()+ "";

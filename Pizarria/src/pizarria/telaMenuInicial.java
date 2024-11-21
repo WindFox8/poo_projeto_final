@@ -188,7 +188,8 @@ public class telaMenuInicial extends javax.swing.JFrame {
         sId = Integer.toString(id);
         Cliente c5 = new Cliente("Teste 5", "Sobrenome 5", "42999788482", id);
         BancoDadosClientes.listaClientes.put(sId, c5);
-        
+      
+                   
         //popular banco de sabores
           
         SaborPremium saborPremium1 = new SaborPremium("Toscana");
@@ -209,13 +210,13 @@ public class telaMenuInicial extends javax.swing.JFrame {
         SaborSimples saborSimples3 = new SaborSimples("Margherita");
         adicionarSaborSimples(saborSimples3);
        
-        Sabor saborEspecial1 = new Sabor("Frango com Catupiry");
+        Sabor saborEspecial1 = new SaborEspecial("Frango com Catupiry");
         adicionarSaborEspecial(saborEspecial1);
 
-        Sabor saborEspecial2 = new Sabor("Portuguesa");
+        Sabor saborEspecial2 = new SaborEspecial("Portuguesa");
         adicionarSaborEspecial(saborEspecial2);
 
-        Sabor saborEspecial3 = new Sabor("4 Queijos");
+        Sabor saborEspecial3 = new SaborEspecial("4 Queijos");
         adicionarSaborEspecial(saborEspecial3);
         
         //popula valores dos tipos de pizza

@@ -9,17 +9,27 @@ package pizarria;
  * @author rafae
  */
 public class SaborEspecial extends Sabor{
-    private static double valor;
+    private static double valorEspecial;
 
     public SaborEspecial(String sabor){
         super(sabor);
     }
 
-    public static double getValorEspecial() {
-        return valor;
+  
+
+   public static void setValorEspecial(double valorR){
+       valorEspecial = valorR;
+   }
+    
+    
+    @Override
+    public double getValor() {
+        return valorEspecial;
+    }
+    
+    public static double getValorEspecial(){
+        return valorEspecial;
     }
 
-    public static void setValorEspecial(double valorR) {
-        valor = valorR;
-    }
+
 }
