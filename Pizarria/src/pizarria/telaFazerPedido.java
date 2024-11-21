@@ -408,32 +408,32 @@ public class telaFazerPedido extends javax.swing.JFrame {
             int indexTipo2 = boxTipos2.getSelectedIndex()-1;
                             
             Sabor sabor1 = sabores.get(indexTipo1).get(indexSabor1);
-            Sabor sabor2 = sabores.get(indexTipo2).get(indexSabor2);
+            Sabor sabor2 = indexTipo2 != -1 ? sabores.get(indexTipo2).get(indexSabor2) : null;
                     
             Pizza pizza = null;
 
             switch (forma) {
                 case "Quadrada":  
                     if (btnArea.isSelected()) {        
-                        pizza = indexTipo2 != 0 ? new PizzaQuadrada(dimensao, sabor1, sabor2, true) : new PizzaQuadrada(dimensao, sabor1, true);
+                        pizza = indexTipo2 != -1 ? new PizzaQuadrada(dimensao, sabor1, sabor2, true) : new PizzaQuadrada(dimensao, sabor1, true);
                     } else {
-                        pizza = indexTipo2 != 0 ? new PizzaQuadrada(dimensao, sabor1, sabor2) : new PizzaQuadrada(dimensao, sabor1);
+                        pizza = indexTipo2 != -1 ? new PizzaQuadrada(dimensao, sabor1, sabor2) : new PizzaQuadrada(dimensao, sabor1);
                     }
                     break;
                     
                 case "Circular":
                     if (btnArea.isSelected()) {        
-                        pizza = indexTipo2 != 0 ? new PizzaRedonda(dimensao, sabor1, sabor2, true) : new PizzaQuadrada(dimensao, sabor1, true);
+                        pizza = indexTipo2 != -1 ? new PizzaRedonda(dimensao, sabor1, sabor2, true) : new PizzaQuadrada(dimensao, sabor1, true);
                     } else {
-                        pizza = indexTipo2 != 0 ? new PizzaRedonda(dimensao, sabor1, sabor2) : new PizzaQuadrada(dimensao, sabor1);
+                        pizza = indexTipo2 != -1 ? new PizzaRedonda(dimensao, sabor1, sabor2) : new PizzaQuadrada(dimensao, sabor1);
                     }
                     break;
                     
                 case "Triangular":
                     if (btnArea.isSelected()) {        
-                        pizza = indexTipo2 != 0 ? new PizzaTriangular(dimensao, sabor1, sabor2, true) : new PizzaQuadrada(dimensao, sabor1, true);
+                        pizza = indexTipo2 != -1 ? new PizzaTriangular(dimensao, sabor1, sabor2, true) : new PizzaQuadrada(dimensao, sabor1, true);
                     } else {
-                        pizza = indexTipo2 != 0 ? new PizzaTriangular(dimensao, sabor1, sabor2) : new PizzaQuadrada(dimensao, sabor1);
+                        pizza = indexTipo2 != -1 ? new PizzaTriangular(dimensao, sabor1, sabor2) : new PizzaQuadrada(dimensao, sabor1);
                     }
                     break;
                     
@@ -472,32 +472,33 @@ public class telaFazerPedido extends javax.swing.JFrame {
             int indexTipo2 = boxTipos2.getSelectedIndex()-1;
                             
             Sabor sabor1 = sabores.get(indexTipo1).get(indexSabor1);
-            Sabor sabor2 = sabores.get(indexTipo2).get(indexSabor2);
+            
+            Sabor sabor2 = indexTipo2 != -1 ? sabores.get(indexTipo2).get(indexSabor2) : null;
                     
             Pizza pizza = null;
 
             switch (forma) {
                 case "Quadrada":  
                     if (btnArea.isSelected()) {        
-                        pizza = indexTipo2 != 0 ? new PizzaQuadrada(dimensao, sabor1, sabor2, true) : new PizzaQuadrada(dimensao, sabor1, true);
+                        pizza = indexTipo2 != -1 ? new PizzaQuadrada(dimensao, sabor1, sabor2, true) : new PizzaQuadrada(dimensao, sabor1, true);
                     } else {
-                        pizza = indexTipo2 != 0 ? new PizzaQuadrada(dimensao, sabor1, sabor2) : new PizzaQuadrada(dimensao, sabor1);
+                        pizza = indexTipo2 != -1 ? new PizzaQuadrada(dimensao, sabor1, sabor2) : new PizzaQuadrada(dimensao, sabor1);
                     }
                     break;
                     
                 case "Circular":
                     if (btnArea.isSelected()) {        
-                        pizza = indexTipo2 != 0 ? new PizzaRedonda(dimensao, sabor1, sabor2, true) : new PizzaQuadrada(dimensao, sabor1, true);
+                        pizza = indexTipo2 != -1 ? new PizzaRedonda(dimensao, sabor1, sabor2, true) : new PizzaQuadrada(dimensao, sabor1, true);
                     } else {
-                        pizza = indexTipo2 != 0 ? new PizzaRedonda(dimensao, sabor1, sabor2) : new PizzaQuadrada(dimensao, sabor1);
+                        pizza = indexTipo2 != -1 ? new PizzaRedonda(dimensao, sabor1, sabor2) : new PizzaQuadrada(dimensao, sabor1);
                     }
                     break;
                     
                 case "Triangular":
                     if (btnArea.isSelected()) {        
-                        pizza = indexTipo2 != 0 ? new PizzaTriangular(dimensao, sabor1, sabor2, true) : new PizzaQuadrada(dimensao, sabor1, true);
+                        pizza = indexTipo2 != -1 ? new PizzaTriangular(dimensao, sabor1, sabor2, true) : new PizzaQuadrada(dimensao, sabor1, true);
                     } else {
-                        pizza = indexTipo2 != 0 ? new PizzaTriangular(dimensao, sabor1, sabor2) : new PizzaQuadrada(dimensao, sabor1);
+                        pizza = indexTipo2 != -1 ? new PizzaTriangular(dimensao, sabor1, sabor2) : new PizzaQuadrada(dimensao, sabor1);
                     }
                     break;
                     
