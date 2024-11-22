@@ -66,6 +66,10 @@ public abstract class Pizza {
     public double getDimensao() {
         return dimensao;
     }
+    
+    public String getDimensaoFormatada(){
+        return String.format("%.2f", dimensao);
+    }
 
     public void setDimensao(double dimensao) {
         this.dimensao = dimensao;
@@ -76,6 +80,10 @@ public abstract class Pizza {
     public double getArea() {
         return area;
     }
+    
+    public String getAreaFormatada(){
+        return String.format("%.2f", area);
+    }
 
     public void setArea(double area) {
         this.area = area;
@@ -85,6 +93,13 @@ public abstract class Pizza {
 
     public double getValor() {
         return valor;
+        
+    }
+    
+    //valor com duas casa decimais apenas
+    public String getValorFormatado(){
+        double valor = this.valor;
+        return String.format("%.2f", valor);
     }
 
     public double calcularValorTotal() {

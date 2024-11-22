@@ -197,6 +197,8 @@ public class telaPedidos extends javax.swing.JFrame {
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // mostrar tabela sempre que entrar na tela
         this.TabelaModelClientes.setListaContatos(BancoDadosClientes.listaClientes);
+        
+        System.out.println("aa");
     }//GEN-LAST:event_formComponentShown
 
     private void txtPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyReleased
@@ -234,7 +236,8 @@ public class telaPedidos extends javax.swing.JFrame {
         } else {
             Cliente c = this.clienteSelecionadoParaExibicao;
             String pedido = c.getPedido().getEstado() + "";
-            labelStatus.setText("teste");
+            System.out.println(c.Pedido.getEstado());
+            labelStatus.setText(pedido);
         }
     }//GEN-LAST:event_btnAttActionPerformed
 

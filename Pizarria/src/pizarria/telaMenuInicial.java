@@ -64,6 +64,11 @@ public class telaMenuInicial extends javax.swing.JFrame {
         });
 
         btnVerPedidos.setText("Ver Pedidos");
+        btnVerPedidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerPedidosActionPerformed(evt);
+            }
+        });
 
         btnAlterarPizzas.setText("Alterar Pizzas");
         btnAlterarPizzas.addActionListener(new java.awt.event.ActionListener() {
@@ -195,7 +200,7 @@ public class telaMenuInicial extends javax.swing.JFrame {
         Sabor saborPremium1 = new SaborPremium("Toscana");
         adicionarSaborPremium(saborPremium1);
 
-        Sabor saborPremium2 = new SaborPremium("Frango com Catupiry");
+        Sabor saborPremium2 = new SaborPremium("Fiorenttinna");
         adicionarSaborPremium(saborPremium2);
 
         Sabor saborPremium3 = new SaborPremium("Carne Seca com Abóbora");
@@ -229,6 +234,13 @@ public class telaMenuInicial extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "BANCOS POPULADOS COM SUCESSO!!\n", "BANCOS POPULADOS", JOptionPane.INFORMATION_MESSAGE);
         btnPopular.setVisible(false);
     }//GEN-LAST:event_btnPopularActionPerformed
+
+    private void btnVerPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerPedidosActionPerformed
+        // TODO add your handling code here:
+        
+        new telaVerPedidos().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnVerPedidosActionPerformed
 
     /**
      * @param args the command line arguments

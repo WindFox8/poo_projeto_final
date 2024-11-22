@@ -70,9 +70,9 @@ public class TableModelPizzas extends AbstractTableModel{
             case 0: return pizza.getForma();//if column 0 (code)
             case 1: return sabor1;//if column 1 (name)
             case 2: return sabor2;//if column 2 (birthday)
-            case 3: return pizza.getDimensao();
-            case 4: return pizza.getArea();//if column 2 (birthday)
-            case 5: return pizza.getPrecoTotal();
+            case 3: return pizza.getDimensaoFormatada();
+            case 4: return pizza.getAreaFormatada();//if column 2 (birthday)
+            case 5: return pizza.getValorFormatado();
 
             default : return null;
         }

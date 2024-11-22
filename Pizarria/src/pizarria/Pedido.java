@@ -25,9 +25,12 @@ public class Pedido {
 
     public Pedido(int id) {
         this.id = id;
+        estado = Estado.ABERTO;
+    
     }
     
     public Pedido (){
+        estado = Estado.ABERTO;
     }
 
     public int getId() {
@@ -36,6 +39,10 @@ public class Pedido {
 
     public Estado getEstado() {
         return estado;
+    }
+    
+    public String getEstadoString () {
+        return estado.toString();
     }
 
     public void setEstado(Estado estado) {
@@ -55,7 +62,9 @@ public class Pedido {
         }
     }
     
-    
+    public void limparLIstaPizza (){
+        this.listaItens.clear();
+    }
     
     public List<Pizza> getListPizza (){
         return listaItens;
