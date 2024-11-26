@@ -1,5 +1,11 @@
 # poo_projeto_final
 
+Nomes:
+João Vitor Liskoski Walter;
+Lucas Venturin Trindade;
+Rafael Fernando Nunho Correr;
+Uriel Duarte Oliveira; 
+
 Descrições Trabalho: [Trabalho - Disciplina - 2024SEM2.pdf](https://github.com/user-attachments/files/17792600/Trabalho.-.Disciplina.-.2024SEM2.pdf)
 
 Diagrama(Aperfeiçoar): https://ufprbr0-my.sharepoint.com/:x:/g/personal/rafael_correr_ufpr_br/EcqSq5oX6ghBhgGzCjhVEEsB28Y_EgSz1VRASS0PKzu9PQ?e=ASbom7
