@@ -117,9 +117,9 @@ public class telaCadastrarSabores extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-            // fazer a inscrição do sabor digitado
+        // fazer a inscrição do sabor digitado
 
-           String nomeSabor = txtSabor.getText();
+        String nomeSabor = txtSabor.getText();
         if (existeSabor(nomeSabor)) {
             JOptionPane.showMessageDialog(null, "ESTE SABOR JÁ EXISTE!!.\n", "SABOR JÁ EXISTENTE", JOptionPane.INFORMATION_MESSAGE);
         } else {

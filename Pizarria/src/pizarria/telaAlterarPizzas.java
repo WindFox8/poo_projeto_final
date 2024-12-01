@@ -138,12 +138,11 @@ public class telaAlterarPizzas extends javax.swing.JFrame {
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         //popular os fields com valores
-       
-        
-        String precoSimples = getValorSimples()+ "";
-        String precoEspecial = getValorEspecial()+"";
-        String precoPremium = getValorPremium()+ "";
-        
+
+        String precoSimples = getValorSimples() + "";
+        String precoEspecial = getValorEspecial() + "";
+        String precoPremium = getValorPremium() + "";
+
         txtPremium.setText(precoPremium);
         txtEspecial.setText(precoEspecial);
         txtSimples.setText(precoSimples);
@@ -156,27 +155,24 @@ public class telaAlterarPizzas extends javax.swing.JFrame {
         String sPrecoEspecial = txtEspecial.getText();
         String sPrecoPremium = txtPremium.getText();
         try {
-        double precoSimples = Double.parseDouble(sPrecoSimples);
-        double precoEspecial = Double.parseDouble(sPrecoEspecial);
-        double precoPremium = Double.parseDouble(sPrecoPremium);
-        
-        setValorEspecial(precoEspecial);
-        setValorPremium(precoPremium);
-        setValorSimples(precoSimples);
-        JOptionPane.showMessageDialog(null, "Valor(es) alterados com sucesso.\n", "VALOR ALTERADO", JOptionPane.INFORMATION_MESSAGE);
-        } catch (java.lang.NumberFormatException e){
+            double precoSimples = Double.parseDouble(sPrecoSimples);
+            double precoEspecial = Double.parseDouble(sPrecoEspecial);
+            double precoPremium = Double.parseDouble(sPrecoPremium);
+
+            setValorEspecial(precoEspecial);
+            setValorPremium(precoPremium);
+            setValorSimples(precoSimples);
+            JOptionPane.showMessageDialog(null, "Valor(es) alterados com sucesso.\n", "VALOR ALTERADO", JOptionPane.INFORMATION_MESSAGE);
+        } catch (java.lang.NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "INSIRA UM VALOR VÁLIDO.\n", "INSIRA VALOR VÁLIDO", JOptionPane.INFORMATION_MESSAGE);
         }
-        
-        
-        
-        
-        
+
+
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         //voltar ao menu
-        
+
         new telaMenuInicial().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
